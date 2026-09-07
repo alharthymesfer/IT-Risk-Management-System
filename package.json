@@ -1,0 +1,39 @@
+{
+  "name": "it-risk-management-system",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "npm run build -w packages/shared && npm run test --workspaces --if-present",
+    "build": "npm run build -w packages/shared && npm run build --workspaces --if-present",
+    "dev:api": "npm run start:dev -w apps/api",
+    "dev:web": "npm run dev -w apps/web"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.18.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^16.0.0",
+    "prettier": "^3.4.2",
+    "tailwindcss": "^4.3.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.102.8",
+    "lucide-react": "^1.37.0",
+    "react-router-dom": "^7.18.3",
+    "recharts": "^3.10.1"
+  }
+}

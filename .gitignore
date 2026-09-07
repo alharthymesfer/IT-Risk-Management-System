@@ -1,0 +1,34 @@
+node_modules/
+dist/
+dist-ssr/
+build/
+coverage/
+
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Local cookie-jar / captured-token files from manual curl-based API testing
+*cookies*.txt
+*.cookies
+
+# Logs
+*.log
+logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Editor / OS files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
