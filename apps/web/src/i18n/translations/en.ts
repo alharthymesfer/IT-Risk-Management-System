@@ -22,6 +22,7 @@ export const en = {
     genericDeleteError: 'Something went wrong while deleting.',
     loadError: 'Failed to load data. Please try again.',
     noRecords: 'No records found.',
+    footer: '© 2026 Mesfer Mohammed Al-Harthi — IT Risk Management System. All Rights Reserved.',
   },
   nav: {
     dashboard: 'Dashboard',
