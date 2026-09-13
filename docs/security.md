@@ -94,17 +94,16 @@ meaningful effect here.
 
 ## CORS
 
-`app.enableCors({ origin: process.env.CORS_ORIGIN ?? 'http://localhost:5173', credentials: true })`
-(`main.ts`) — a single, fixed allowed origin (not a wildcard, and not reflected from the request's
-`Origin` header). Verified directly: sending `Origin: http://evil.example.com` still returns
-`Access-Control-Allow-Origin: http://localhost:5173` in the response — the configured origin, never
-the caller's. A browser enforces that the two must match, so a page on any other origin cannot read
-a cross-origin response even if it could trigger the request.
+The API serves the built frontend from the same origin/process (`ServeStaticModule` in
+`app.module.ts`, with `app.setGlobalPrefix('api')` in `main.ts` keeping every controller route under
+`/api/**` so it can't be shadowed by the SPA's fallback route). Browser traffic is therefore
+same-origin and no CORS configuration is applied — there is no cross-origin caller to allow.
 
 ## CSRF
 
-There is no separate CSRF token mechanism; CSRF resistance instead comes from the `access_token`
-cookie's `SameSite=Lax` flag combined with the CORS policy above. This was verified with a real
+There is no separate CSRF token mechanism; CSRF resistance comes from the `access_token` cookie's
+`SameSite=Lax` flag together with the same-origin deployment above (a third-party site has no origin
+to be exempted from in the first place). This was verified with a real
 browser (not just by inspecting the cookie flag): a genuine cross-origin page was loaded in Chrome
 and made to submit a `<form>` `POST` and a `fetch(..., { credentials: 'include' })` request against
 a mutating endpoint. In both cases the request reached the server **with no `Cookie` header

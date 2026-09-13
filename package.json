@@ -15,6 +15,7 @@
     "format:check": "prettier --check .",
     "test": "npm run build -w packages/shared && npm run test --workspaces --if-present",
     "build": "npm run build -w packages/shared && npm run build --workspaces --if-present",
+    "build:deploy": "npm run build -w packages/shared && npm run build -w apps/web && npm run build -w apps/api && rm -rf apps/api/public && cp -r apps/web/dist apps/api/public",
     "dev:api": "npm run start:dev -w apps/api",
     "dev:web": "npm run dev -w apps/web"
   },

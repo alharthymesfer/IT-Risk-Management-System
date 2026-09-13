@@ -14,10 +14,9 @@ async function bootstrap() {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-  app.enableCors({
-    origin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
-    credentials: true,
-  });
+  // Frontend and API are served from the same origin in production, so no CORS
+  // configuration is needed for browser traffic — see docs/security.md.
+  app.setGlobalPrefix('api');
 
   await app.listen(process.env.PORT ?? 3000);
 }

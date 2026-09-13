@@ -1,7 +1,10 @@
 # API Reference
 
-Base URL: `http://localhost:3000` (configurable via `PORT`). All routes are unprefixed (no
-`/api` prefix).
+Base URL: `http://localhost:3000` (configurable via `PORT`). All API routes are served under the
+`/api` prefix (`app.setGlobalPrefix('api')` in `main.ts`) — every path in this document is relative
+to that prefix (e.g. `/auth/login` below means `/api/auth/login`). Everything outside `/api` serves
+the built frontend SPA (`ServeStaticModule` in `app.module.ts`), so the app and API share one origin
+in production.
 
 ## Conventions
 
@@ -28,7 +31,7 @@ Base URL: `http://localhost:3000` (configurable via `PORT`). All routes are unpr
 
 | Method | Path | Roles | Description |
 |---|---|---|---|
-| GET | `/` | Public | API status/health payload: `{ name, status }` |
+| GET | `/` (i.e. `/api`) | Public | API status/health payload: `{ name, status }` |
 
 ## Auth (`/auth`)
 

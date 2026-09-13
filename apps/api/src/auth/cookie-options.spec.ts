@@ -5,7 +5,7 @@ describe('buildAccessTokenCookieOptions', () => {
   const configFor = (values: Record<string, string>) =>
     ({ get: (key: string) => values[key] }) as unknown as ConfigService;
 
-  it('builds httpOnly/secure/sameSite=none options with maxAge derived from JWT_EXPIRES_IN', () => {
+  it('builds httpOnly/secure/sameSite=lax options with maxAge derived from JWT_EXPIRES_IN', () => {
     const options = buildAccessTokenCookieOptions(
       configFor({ JWT_EXPIRES_IN: '8h', COOKIE_SECURE: 'true', COOKIE_DOMAIN: 'example.com' }),
     );
@@ -13,7 +13,7 @@ describe('buildAccessTokenCookieOptions', () => {
     expect(options).toMatchObject({
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
+      sameSite: 'lax',
       domain: 'example.com',
       path: '/',
       maxAge: 8 * 60 * 60 * 1000,

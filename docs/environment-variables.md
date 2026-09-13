@@ -19,14 +19,13 @@
 | `JWT_SECRET` | `changeme` | **Yes** | HMAC secret used to sign/verify access tokens. **The `.env.example` value is a template, not a runnable default** — the API refuses to start if `JWT_SECRET` is missing, under 16 characters, or a known placeholder like `changeme`, even for local dev. Generate a real value (e.g. `openssl rand -base64 48`). See [`security.md`](./security.md). |
 | `JWT_EXPIRES_IN` | `8h` | No (defaults to `8h`) | Access-token lifetime, in [`ms`](https://www.npmjs.com/package/ms) format. Also drives the auth cookie's `maxAge`. |
 | `COOKIE_SECURE` | `false` | No (defaults to `false`) | Set to `true` in any environment served over HTTPS, so the `access_token` cookie requires TLS. |
-| `COOKIE_DOMAIN` | `localhost` | No | Cookie `Domain` attribute. |
-| `CORS_ORIGIN` | `http://localhost:5173` | No (defaults to `http://localhost:5173`) | Single allowed CORS origin, sent with `credentials: true` (required for the cookie to be usable cross-origin). |
+| `COOKIE_DOMAIN` | `localhost` | No | Cookie `Domain` attribute. Leave unset in production — the API serves the frontend from the same origin, so a host-only cookie is correct. |
 
 ## `apps/web/.env`
 
 | Variable | Example | Required | Description |
 |---|---|---|---|
-| `VITE_API_BASE_URL` | `http://localhost:3000` | No (defaults to `http://localhost:3000`) | Base URL the frontend sends every API request to (`apps/web/src/api/client.ts`). Change this if the API runs on a different host/port than the default. |
+| `VITE_API_BASE_URL` | `http://localhost:3000/api` | No (defaults to `/api`) | Base URL the frontend sends every API request to (`apps/web/src/api/client.ts`). In production this is left unset so requests resolve to the relative `/api` path on the same origin the SPA is served from; for local dev it points at the separately-running Nest dev server, including the `/api` prefix set by `app.setGlobalPrefix('api')`. |
 
 ## Notes
 

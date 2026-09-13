@@ -3,6 +3,10 @@ dist/
 dist-ssr/
 build/
 coverage/
+*.tsbuildinfo
+
+# Frontend build copied into the API service for same-origin serving (see build:deploy)
+apps/api/public/
 
 .env
 .env.local

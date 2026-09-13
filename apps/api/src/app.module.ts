@@ -1,6 +1,8 @@
+import { join } from 'node:path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,6 +22,14 @@ import { VulnerabilitiesModule } from './vulnerabilities/vulnerabilities.module'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, validate: validateEnv }),
+    // Serves the built React SPA (apps/web/dist, copied to apps/api/public at
+    // build time) from the same origin/process as the API. `/api/**` is excluded
+    // so it always falls through to the real controllers below instead of being
+    // swallowed by the SPA's index.html fallback.
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      exclude: ['/api/{*splat}'],
+    }),
     ThrottlerModule.forRoot([{ ttl: 60_000, limit: 20 }]),
     PrismaModule,
     AuditLogModule,
