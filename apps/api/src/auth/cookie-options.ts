@@ -8,7 +8,7 @@ export function buildAccessTokenCookieOptions(configService: ConfigService): Coo
   return {
     httpOnly: true,
     secure: configService.get<string>('COOKIE_SECURE') === 'true',
-    sameSite: 'lax',
+    sameSite: configService.get<string>('COOKIE_SECURE') === 'true' ? 'none' : 'lax',
     domain: configService.get<string>('COOKIE_DOMAIN'),
     path: '/',
     maxAge: ms(expiresIn),
